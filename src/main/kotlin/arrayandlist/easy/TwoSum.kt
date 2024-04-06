@@ -102,7 +102,7 @@ class TwoSumImpl: TwoSum() {
         val myHashMap = HashMap<Int, Int>()
         nums.forEachIndexed{ index, item ->
             if (myHashMap.contains(item)) {
-                return intArrayOf(index, myHashMap[item]!!)
+                return intArrayOf(myHashMap[item]!!, index)
             } else {
                 myHashMap[target - item] = index
             }
