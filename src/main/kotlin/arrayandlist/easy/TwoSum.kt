@@ -99,6 +99,11 @@ class TwoSumImpl: TwoSum() {
      *  - The list is empty -> return empty list
      */
     override fun twoSum(nums: IntArray, target: Int): IntArray {
+        // Target   9
+        // Position 0  1   2   3
+        // Array   [2, 7, 11, 15]
+        //          2            {}     -> {7:0}
+        //             7         {7: 0} -> [0, 1]
         val myHashMap = HashMap<Int, Int>()
         nums.forEachIndexed{ index, item ->
             if (myHashMap.contains(item)) {
