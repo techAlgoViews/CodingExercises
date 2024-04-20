@@ -111,17 +111,17 @@ class FizzBuzzAppend: FizzBuzz() {
         // Create the content and loop through
         return Array(n) { "" }.mapIndexed { index, _ ->
             val sb = StringBuilder()
-
-            if ((index + 1) % 3 == 0) {
+            val position = index + 1
+            if (position % 3 == 0) {
                 sb.append("Fizz")
             }
 
-            if ((index + 1) % 5 == 0) {
+            if (position % 5 == 0) {
                 sb.append("Buzz")
             }
 
             if (sb.isEmpty()) {
-                sb.append(index + 1)
+                sb.append(position)
             }
 
             sb.toString()
