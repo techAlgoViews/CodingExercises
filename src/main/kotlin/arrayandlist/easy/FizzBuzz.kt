@@ -110,8 +110,8 @@ class FizzBuzzAppend: FizzBuzz() {
     override fun fizzBuzz(n: Int): List<String> {
         // Create the content and loop through
         return Array(n) { "" }.mapIndexed { index, _ ->
-            val sb = StringBuilder()
             val position = index + 1
+            val sb = StringBuilder()
             if (position % 3 == 0) {
                 sb.append("Fizz")
             }
