@@ -28,7 +28,7 @@ import org.junit.Test
  */
 abstract class FirstLetterToAppearTwice {
 
-    abstract fun firstLetterToAppearTwice(str: String): Char
+    abstract fun firstLetterToAppearTwice(s: String): Char
 
     @Test
     fun test1() {
@@ -116,16 +116,16 @@ class FirstLetterToAppearTwiceImpl: FirstLetterToAppearTwice() {
      * - Space: O(n)
      *
      */
-    override fun firstLetterToAppearTwice(str: String): Char {
+    override fun firstLetterToAppearTwice(s: String): Char {
         // 1. Init the variable
         val hashSet = HashSet<Char>()
 
         // 2. Loop
-        str.forEach {
-            if (hashSet.contains(it)) {
-                return it
+        for (ch in s) {
+            if (hashSet.contains(ch)) {
+                return ch
             } else {
-                hashSet.add(it)
+                hashSet.add(ch)
             }
         }
 
@@ -138,17 +138,17 @@ class FirstLetterToAppearTwiceOptimSpace: FirstLetterToAppearTwice() {
     /**
      * Instead of using a hash set, use an array of chars
      */
-    override fun firstLetterToAppearTwice(str: String): Char {
+    override fun firstLetterToAppearTwice(s: String): Char {
         // 1. Init the variable
         val myArray = Array<Boolean>(26) { false }
 
         // 2. Repeat
-        str.forEach {
-            if (it != ' ') {
-                if (myArray[it - 'a']) {
-                    return it
+       for (ch in s) {
+            if (ch != ' ') {
+                if (myArray[ch - 'a']) {
+                    return ch
                 } else {
-                    myArray[it - 'a'] = true
+                    myArray[ch - 'a'] = true
                 }
             }
         }
@@ -165,12 +165,12 @@ class FirstLetterToAppearTwiceOptimized: FirstLetterToAppearTwice() {
      * c { 'a', 'b'}       -> {'a', 'b', 'c'} true
      * c { 'a', 'b', 'c' } -> {'a', 'b', 'c'} false
      */
-    override fun firstLetterToAppearTwice(str: String): Char {
+    override fun firstLetterToAppearTwice(s: String): Char {
         // 1. Init the variable
         val hashSet = HashSet<Char>()
 
         // 2. Loop
-        str.forEach {ch ->
+        for (ch in s) {
             if (!hashSet.add(ch)) {
                 return ch
             }
