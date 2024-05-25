@@ -125,11 +125,11 @@ class RomanToIntegerImpl: RomanToInteger() {
         var previousValue = 0
         var result = 0
 
-        //           X I V = 14
-        //Pointer    i
-        //PV = 1
-        //CV = 5
-        //Result 0 + 10 + 1 + 5 - (1 * 2) = 14
+        //                    X  I V = 14
+        //                    10 1 5
+        //Current Value =      ^
+        //Previous Value = ^
+        //Result 0 + 10 + 1 + 5 - 1 - 1 = 14
 
         // 2. Loop
         for (element in s) {
