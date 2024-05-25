@@ -129,6 +129,7 @@ class FirstLetterToAppearTwiceImpl: FirstLetterToAppearTwice() {
             }
         }
 
+        // 3. Return the default value
         return 'a'
     }
 }
@@ -153,6 +154,7 @@ class FirstLetterToAppearTwiceOptimSpace: FirstLetterToAppearTwice() {
             }
         }
 
+        // 3. Return the default value
         return 'a'
     }
 }
@@ -176,6 +178,7 @@ class FirstLetterToAppearTwiceOptimized: FirstLetterToAppearTwice() {
             }
         }
 
+        // 3. Return the default value
         return 'a'
     }
 
