@@ -44,8 +44,8 @@ abstract class ValidAnagram {
     @Test
     fun test3() {
         // Given
-        val original = "CNBC"
-        val check = "BCCN"
+        val original = "cnbc"
+        val check = "bccn"
 
         // When
         val result = isValid(original, check)
@@ -57,8 +57,8 @@ abstract class ValidAnagram {
     @Test
     fun test4() {
         // Given
-        val original = "CNaBC"
-        val check = "BCaCN"
+        val original = "cbabc"
+        val check = "bcacb"
 
         // When
         val result = isValid(original, check)
@@ -84,12 +84,12 @@ class ValidAnagramImpl: ValidAnagram() {
 
         // Build the map with the chars
         s.toCharArray().forEach {
-            map[it.code] ++
+            map[it.code - 'a'.code] ++
         }
 
         // Check the chars against the map
         t.toCharArray().forEach {
-            map[it.code] --
+            map[it.code - 'a'.code] --
         }
 
         // Check the result
