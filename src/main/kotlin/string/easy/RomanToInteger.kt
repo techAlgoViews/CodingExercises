@@ -144,10 +144,21 @@ class RomanToIntegerImpl: RomanToInteger() {
         dict['D' - 'A'] = 500
         dict['M' - 'A'] = 1000
 
+//           X I V = 14
+//Pointer    i
+//PV = 1
+//CV = 5
+//Result 0 + 10 + 1 + 5 - (1 * 2) = 14
+
         // 2. Loop
         for (element in s) {
-           val currentValue = dict[element - 'A']
+            // Get the current value corresponding to the roman number
+            val currentValue = dict[element - 'A']
+            // Add the current value to the result
             result += currentValue
+            // If the current number is bigger than the previous number, we have
+            // added the previous number wrongly. Instead of remove it, we have added it
+            // so we have to extract it twice
             if (currentValue > previousValue) {
                 result -= previousValue * 2
             }
