@@ -3,6 +3,7 @@ package main.kotlin.string.easy
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.util.*
 
 /**
  * Valid Palindrome
@@ -63,6 +64,18 @@ abstract class ValidPalindrome {
     @Test
     fun test3() {
         // Given
+        val s = "race car"
+
+        // When
+        val result = isPalindrome(s)
+
+        // Then
+        assertTrue(result)
+    }
+
+    @Test
+    fun test4() {
+        // Given
         val s = " "
 
         // When
@@ -78,7 +91,7 @@ class ValidPalindromeImpl: ValidPalindrome() {
     /**
      * Initial thoughts
      *
-     * We can going through the list and strip all the non-alphanumeric chars
+     * We can go through the list and strip all the non-alphanumeric chars
      * append them, and then run them again
      *
      * A better way is going through the list once, skip all non-alphanumeric chars
@@ -111,6 +124,61 @@ class ValidPalindromeImpl: ValidPalindrome() {
         }
 
         // 3. Return default value
+        return true
+    }
+}
+
+class ValidPalindromeSimpleSol: ValidPalindrome() {
+    override fun isPalindrome(s: String): Boolean {
+        // 1. Removing all the symbols
+        val sb = StringBuilder()
+        
+        for (char in s) {
+            if (char.isLetterOrDigit()) {
+                sb.append(char)
+            }
+        }
+
+        // 2. return the lower case of all the letter
+        val cleanS = sb.toString().lowercase(Locale.ENGLISH)
+
+        // 3. Using two pointers
+        var leftPointer = 0
+        var rightPointer = cleanS.lastIndex
+
+        while (leftPointer < rightPointer) {
+            if (cleanS[leftPointer] != cleanS[rightPointer]) {
+                return false
+            }
+
+            leftPointer++
+            rightPointer--
+        }
+
+        return true
+    }
+}
+
+class ValidPalindromeOptimal: ValidPalindrome() {
+    override fun isPalindrome(s: String): Boolean {
+        var leftPointer = 0
+        var rightPointer = s.lastIndex
+
+        while (leftPointer <= rightPointer) {
+            val leftChar = s[leftPointer]
+            val rightChar = s[rightPointer]
+
+            if (!leftChar.isLetterOrDigit()) {
+                leftPointer++
+            } else if (!rightChar.isLetterOrDigit()) {
+                rightPointer--
+            } else if (leftChar.isLetterOrDigit() && rightChar.isLetterOrDigit()) {
+                if (leftChar.lowercaseChar() != rightChar.lowercaseChar()) return false
+                leftPointer++
+                rightPointer--
+            }
+        }
+
         return true
     }
 }
