@@ -89,6 +89,17 @@ class ValidParenthesesImpl: ValidParentheses() {
      * - Empty string -> Return true
      * - Only right side -> Return false
      */
+    // ()   -> Valid
+    // ((   -> Not valid
+    // ()[] -> Valid
+    // ([)] -> Not valid
+
+    // Example:
+    // ( { } )
+    // ^       -> stack: (
+    //   ^     -> stack: ({
+    //     ^   -> stack: (
+    //       ^ -> stack:
     override fun isValid(s: String): Boolean {
         val myStack = ArrayDeque<Char>()
         s.forEach { item ->
