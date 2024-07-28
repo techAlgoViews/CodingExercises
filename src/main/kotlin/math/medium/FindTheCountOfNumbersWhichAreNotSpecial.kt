@@ -40,20 +40,15 @@ class FindTheCountOfNumbersWhichAreNotSpecialSieveOfEratosthenes: FindTheCountOf
         // Get the upper bound
         val limit = sqrt(r.toDouble())
 
+        // Check all the prime numbers
         val isPrime = calculatePrimeNumbers(limit.toInt())
 
-        var specialCount = 0
-        for (i in 2 .. limit.toInt()) {
-            if (isPrime[i]) {
-                val square = i * i
-                if (square in l .. r) {
-                    specialCount++
-                }
-            }
-        }
+        // Count the special numbers
+        val specialCount = (2 .. limit.toInt())
+            .filter { isPrime[it] }.count { it * it in l..r }
 
-        val totalCount = r - l + 1
-        return totalCount - specialCount
+        // return total numbers - special count
+        return (r - l + 1) - specialCount
     }
 
     /**
