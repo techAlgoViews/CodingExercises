@@ -73,7 +73,7 @@ abstract class FindIfDigitGameCanBeWon {
         // Then
         assertTrue(result)
     }
-    
+
 }
 
 class FindIfDigitGameCanBeWonImpl: FindIfDigitGameCanBeWon() {
