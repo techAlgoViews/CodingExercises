@@ -10,7 +10,6 @@ abstract class NeighborSum(grid: Array<IntArray>) {
 }
 
 class NeighborSumImp(private val grid: Array<IntArray>): NeighborSum(grid) {
-
     /**
      * Initial thoughts
      *
@@ -30,23 +29,65 @@ class NeighborSumImp(private val grid: Array<IntArray>): NeighborSum(grid) {
      */
     override fun adjacentSum(value: Int): Int {
         // 1. Find the position of the value
-        val (x, y) = findValue(value)
+        val (x, y) = findValue(value) // 4 = (1, 1)
 
         // 2. Add the values
         var sum = 0
         // Top
-        sum += findValueAtPosition(x, y - 1)
+        sum += findValueAtPosition(x, y - 1) // grid[0][1] = 1
 
         // Left
-        sum += findValueAtPosition(x-1, y)
+        sum += findValueAtPosition(x - 1, y) // grid[1][0] = 3
 
         // Right
-        sum += findValueAtPosition(x+1, y)
+        sum += findValueAtPosition(x + 1, y) // grid[1][2] = 5
 
         // Bottom
-        sum += findValueAtPosition(x, y + 1)
+        sum += findValueAtPosition(x, y + 1) // grid[2][1] = 7
 
         return sum
+    }
+
+    /**
+     * Find the position of the value. Note first I find y then I find the x. This is because of
+     * array = [3, 4, 5] -> array[0] = 3, array[1] = 4, array[2] = 5
+     *
+     * grid = [[0, 1, 2]      grid [0] = [0, 1, 2]    grid[0][1] = 1
+     *         [3, 4, 5],  -> grid [1] = [3, 4, 5] -> pos = (x, y)
+     *         [6, 7, 8]]     grid [2] = [6, 7, 8]        = (1, 0)
+     *   y
+     * x -- 0 - 1 - 2
+     *   |
+     *   0  0   1   2
+     *   |
+     *   1  3   4   5
+     *   |
+     *   2  6   7   8
+     */
+    private fun findValue(value: Int): Pair<Int, Int> {
+        grid.forEachIndexed { y, ints ->
+            ints.forEachIndexed { x, item ->
+                if (item == value) {
+                    return Pair(x, y)
+                }
+            }
+        }
+
+        return Pair(-1, -1)
+    }
+
+    private fun findValueAtPosition(x: Int, y: Int): Int {
+        // If the position cannot be found, return 0
+        if (x < 0 || y < 0 || x >= grid.size || y >= grid.size ) return 0
+        grid.forEachIndexed { posY, ints ->
+            ints.forEachIndexed { posX, item ->
+                if (posX == x && posY == y ) {
+                    return item
+                }
+            }
+        }
+
+        return 0
     }
 
     /**
@@ -75,32 +116,6 @@ class NeighborSumImp(private val grid: Array<IntArray>): NeighborSum(grid) {
         sum += findValueAtPosition(x+1, y + 1)
 
         return sum
-    }
-
-    private fun findValue(value: Int): Pair<Int, Int> {
-        grid.forEachIndexed { x, ints ->
-            ints.forEachIndexed { y, item ->
-                if (item == value) {
-                    return Pair(x, y)
-                }
-            }
-        }
-
-        return Pair(-1, -1)
-    }
-
-    private fun findValueAtPosition(x: Int, y: Int): Int {
-        // If the position cannot be found, return 0
-        if (x < 0 || y < 0) return 0
-        grid.forEachIndexed { posX, ints ->
-            ints.forEachIndexed { posY, item ->
-                if (posX == x && posY == y ) {
-                    return item
-                }
-            }
-        }
-
-        return 0
     }
 }
 
