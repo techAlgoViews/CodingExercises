@@ -129,6 +129,21 @@ abstract class CountTheNumberOfGoodNodes {
         assertEquals(6, result)
     }
 
+    @Test
+    fun test5() {
+        // Given
+        val edges = arrayOf(
+            intArrayOf(0, 1),
+            intArrayOf(2, 0)
+        )
+
+        // When
+        val result = countGoodNodes(edges)
+
+        // Then
+        assertEquals(3, result)
+    }
+
 }
 
 class CountTheNumberOfGoodNodesImp: CountTheNumberOfGoodNodes() {
@@ -160,18 +175,27 @@ class CountTheNumberOfGoodNodesImp: CountTheNumberOfGoodNodes() {
      */
     private val tree = mutableMapOf<Int, MutableList<Int>>()
 
+    //                          0
+    //                         / \
+    //                        1   2
+    //
+    // Edges = [[0, 1], [2, 0]]
     override fun countGoodNodes(edges: Array<IntArray>): Int {
         // 1. Build the tree
+        // [[0, 1]]         -> [{0, [1]}, {1, [0]}]
+        // [[0, 1], [2, 0]] -> [{0, [1, 2]}, {1, [0]}, {2, [0]}]
         edges.forEach { edge ->
-            val children0 = tree.getOrDefault(edge[0], mutableListOf())
-            children0.add(edge[1])
-            tree[edge[0]] = children0
-            val children1 = tree.getOrDefault(edge[1], mutableListOf())
-            children1.add(edge[0])
-            tree[edge[1]] = children1
+            val connection0 = tree.getOrDefault(edge[0], mutableListOf())
+            connection0.add(edge[1])
+            tree[edge[0]] = connection0
+            val connection1 = tree.getOrDefault(edge[1], mutableListOf())
+            connection1.add(edge[0])
+            tree[edge[1]] = connection1
         }
 
         // 2. Build the size of its node
+        // index         0  1  2
+        // treeSizes = [ 3  1  1 ]
         val treeSizes = Array(edges.size + 1) { 0 }
         generateTreeSizes(tree, 0, -1, treeSizes)
 
@@ -179,13 +203,21 @@ class CountTheNumberOfGoodNodesImp: CountTheNumberOfGoodNodes() {
         var goodNodesNum = 0
         // Per each one of the nodes
         tree.forEach { entry ->
+            // {0, [1, 2]}
             var isGoodNode = true
-            var nodeSize = -1
-            entry.value.forEach {child ->
-                if (treeSizes[child] < treeSizes[entry.key]) {
-                    if (nodeSize == -1) {
-                        nodeSize = treeSizes[child]
-                    } else if (nodeSize != treeSizes[child]) {
+            var childNodeSize = -1
+            entry.value.forEach {connection ->
+                // Because it is not longer a normal tree but a graph
+                // A good indication that an appointed node is child is
+                // by checking the child sizes. If that's smaller than the
+                // current node size, then for sure it is a child.
+                // treeSizes[0] = 3
+                // treeSizes[1] = 1
+                // treeSizes[2] = 1
+                if (treeSizes[connection] < treeSizes[entry.key]) {
+                    if (childNodeSize == -1) {
+                        childNodeSize = treeSizes[connection]
+                    } else if (childNodeSize != treeSizes[connection]) {
                         isGoodNode = false
                         return@forEach
                     }
@@ -206,10 +238,10 @@ class CountTheNumberOfGoodNodesImp: CountTheNumberOfGoodNodes() {
                                   parent: Int,
         treeSizes: Array<Int>): Int {
         var size = 1 // The size needs to be starting as 1 because of itself
-        val children = tree[currentNode]
-        children?.forEach { child ->
-            if (child != parent) {
-                size += generateTreeSizes(tree, child, currentNode, treeSizes)
+        val neighbors = tree[currentNode]
+        neighbors?.forEach { neighbor ->
+            if (neighbor != parent) {
+                size += generateTreeSizes(tree, neighbor, currentNode, treeSizes)
             }
         }
         treeSizes[currentNode] = size
