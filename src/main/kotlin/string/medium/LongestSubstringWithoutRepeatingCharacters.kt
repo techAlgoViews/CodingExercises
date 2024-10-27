@@ -98,54 +98,7 @@ abstract class LongestSubstringWithoutRepeatingCharacters {
 class LongestSubstringWithoutRepeatingCharactersImpl: LongestSubstringWithoutRepeatingCharacters() {
 
     /**
-     * Initial though
-     *
-     * have 2 pointers
-     *  -> Left = 0
-     *  -> Right = 0
-     * 1 hash set
-     * - value: seen char
-     * longest = 0
-     *
-     *  Loop
-     *  while (right < s.length)
-     *    check if s[right] exists in the hashset
-     *     -> If so,
-     *          - increase left until right
-     *              - every time, remove s[left] from the hashmap
-     *          - add s[right] in the hashset
-     *     -> If not
-     *          -> add s[right] in the hashset
-     *          -> check if right - left + 1 is longer than longest
-     *              -> if so, update longest
-     *  return longest
-     */
-    override fun lengthOfLongestSubstring(s: String): Int {
-        var firstPointer = 0
-        var secondPointer = 0
-        var max = 0
-
-        val hashSet = HashSet<Char>()
-
-        while (secondPointer < s.length) {
-            if (!hashSet.contains(s[secondPointer])) {
-                hashSet.add(s[secondPointer])
-                secondPointer++
-                max = max(hashSet.size, max)
-            } else {
-                hashSet.remove(s[firstPointer])
-                firstPointer++
-            }
-        }
-        return max
-    }
-}
-
-class LongestSubstringWithoutRepeatingCharactersOptim: LongestSubstringWithoutRepeatingCharacters() {
-
-    /**
-     * Optimization over the existing algorithm. Instead of using a hashset of all the chars in the string
-     * Use an array of 128 chars, where it stores the last know position
+     * It uses an array of 128 chars, where it stores the last know position
      *
      * For each char, if the last position exists and it is bigger than start, then
      * move start to the next position to that position
@@ -161,18 +114,18 @@ class LongestSubstringWithoutRepeatingCharactersOptim: LongestSubstringWithoutRe
      */
     override fun lengthOfLongestSubstring(s: String): Int {
         // 1. Init the variables
-        var start = 0
+        var leftPointer = 0
         val positions = Array<Int>(128){ -1 }
         var maxLength = 0
 
         // 2. Loop
-        s.forEachIndexed { index, c ->
-            if (positions[c.code] >= start) {
-                start = positions[c.code] + 1
+        s.forEachIndexed { rightPointer, c ->
+            if (positions[c.code] >= leftPointer) {
+                leftPointer = positions[c.code] + 1
             }
-            positions[c.code] = index
+            positions[c.code] = rightPointer
 
-            maxLength = max(maxLength, index - start + 1)
+            maxLength = max(maxLength, rightPointer - leftPointer + 1)
         }
 
         // Return the result
