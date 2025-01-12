@@ -55,34 +55,33 @@ abstract class RemoveNthNodeFromEndOfList {
 
 class RemoveNthNodeFromEndOfListImpl: RemoveNthNodeFromEndOfList() {
     override fun removeNthFromEnd(head: ListNode?, n: Int): ListNode? {
-        // n = 2
-        //           fast
+        // n = 1
+        //       endNodePointer
         //             |
-        // [dummy] -> [0] -> [1] -> [2] -> [3] -> [4] -> null
+        // [dummy] -> [0] -> [1] -> [2] -> null
         //    |
-        //   slow
+        // removeNodePointer
         // 1. Create a dummy node as result
         val dummyNode = ListNode(-1)
         dummyNode.next = head
 
         // 2. Initialize the pointers
-        var slowPointer: ListNode? = dummyNode
-        var fastPointer = head
+        var removeNodePointer: ListNode? = dummyNode
+        var endNodePointer = head
 
-        // 3. Move the fast pointer n positions
+        // 3. Move the endNodePointer n positions
         for (i in 0 until n) {
-            fastPointer = fastPointer?.next
+            endNodePointer = endNodePointer?.next
         }
 
-        // 4. Moving the fast pointer and slow pointer at the same time
-        while (fastPointer != null) {
-            slowPointer = slowPointer?.next
-            fastPointer = fastPointer.next
+        // 4. Moving the endNodePointer and removeNodePointer at the same time
+        while (endNodePointer != null) {
+            removeNodePointer = removeNodePointer?.next
+            endNodePointer = endNodePointer.next
         }
 
         // 5. Remove the nth node
-        slowPointer?.next = slowPointer?.next?.next
+        removeNodePointer?.next = removeNodePointer?.next?.next
         return dummyNode.next
     }
-
 }
