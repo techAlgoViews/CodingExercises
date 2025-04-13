@@ -77,8 +77,7 @@ class ReverseNodesInKGroupImpl : ReverseNodesInKGroup() {
             val nextGroupStartingNode = groupFinalNode.next
 
             // Revert the list
-            val reversedGroupNodes = reverseList(currentNode, nextGroupStartingNode)
-            groupPrev?.next = reversedGroupNodes
+            groupPrev?.next = reverseList(currentNode, nextGroupStartingNode)
 
             // Reset values
             groupPrev = currentNode
