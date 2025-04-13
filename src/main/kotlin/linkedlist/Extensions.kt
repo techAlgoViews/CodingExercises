@@ -39,14 +39,35 @@ fun ListNode?.checkValues(list: List<Int>): Boolean {
 
 fun ListNode?.toList(): List<Int> {
     val list = mutableListOf<Int>()
+    // To avoid cycle
+    val usedNodes = mutableSetOf<ListNode>()
     var current = this
-    while (current != null) {
+    while (current != null && !usedNodes.contains(current)) {
         list.add(current.`val`)
+        usedNodes.add(current)
         current = current.next
     }
 
     return list
 }
+
+fun ListNode?.repeatedListNode(): ListNode? {
+    // 1. Init the variable
+    var tortoise = this
+    var hare = this
+
+    // 2. Loop
+    while(hare?.next != null){
+        tortoise = tortoise?.next
+        hare = hare.next?.next
+        if(tortoise == hare) return tortoise
+    }
+
+    // 3. If fast is ever null or fast.next is ever null, return null
+    return null
+}
+
+fun ListNode?.hasCycle() = repeatedListNode() != null
 
 class TestCheckValues {
     @Test
