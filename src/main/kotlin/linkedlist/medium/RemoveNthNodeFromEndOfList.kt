@@ -1,8 +1,8 @@
 package main.kotlin.linkedlist.medium
 
-import linkedlist.checkValues
-import linkedlist.toLinkedList
 import main.kotlin.linkedlist.ListNode
+import main.kotlin.linkedlist.checkValues
+import main.kotlin.linkedlist.toLinkedList
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource

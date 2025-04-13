@@ -1,8 +1,8 @@
 package main.kotlin.linkedlist.easy
 
 import main.kotlin.linkedlist.ListNode
-import linkedlist.checkValues
-import linkedlist.toLinkedList
+import main.kotlin.linkedlist.checkValues
+import main.kotlin.linkedlist.toLinkedList
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test

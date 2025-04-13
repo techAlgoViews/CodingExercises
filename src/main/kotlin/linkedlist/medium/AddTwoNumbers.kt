@@ -1,8 +1,8 @@
 package main.kotlin.linkedlist.medium
 
-import linkedlist.checkValues
-import linkedlist.toLinkedList
 import main.kotlin.linkedlist.ListNode
+import main.kotlin.linkedlist.checkValues
+import main.kotlin.linkedlist.toLinkedList
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 
