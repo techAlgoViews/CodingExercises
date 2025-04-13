@@ -55,7 +55,7 @@ abstract class LinkedListCycle {
     }
 
     // TODO: Fix this
-    @Ignore("This test never ends")
+//    @Ignore("This test never ends")
     @Test
     fun testNormal1() {
         // Given
@@ -71,8 +71,6 @@ abstract class LinkedListCycle {
         assertTrue(result)
     }
 
-    // TODO: Fix this
-    @Ignore("This test never ends")
     @Test
     fun testNormal2() {
         // Given
