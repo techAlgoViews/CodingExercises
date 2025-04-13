@@ -2,6 +2,7 @@ package main.kotlin.linkedlist.hard
 
 import main.kotlin.linkedlist.ListNode
 import main.kotlin.linkedlist.toLinkedList
+import main.kotlin.linkedlist.toList
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.extension.ExtensionContext
 import org.junit.jupiter.params.ParameterizedTest
@@ -39,7 +40,7 @@ abstract class ReverseNodesInKGroup {
     @ArgumentsSource(TestDataArgumentProvider::class)
     fun test(head: ListNode?, k: Int, expectedValue: ListNode?) {
         val result = reverseKGroup(head, k)
-        Assertions.assertEquals(expectedValue, result)
+        Assertions.assertEquals(expectedValue.toList(), result.toList())
     }
 
     class TestDataArgumentProvider : ArgumentsProvider {
