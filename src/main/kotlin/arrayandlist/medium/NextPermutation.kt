@@ -1,4 +1,4 @@
-package main.kotlin.linkedlist.medium
+package main.kotlin.arrayandlist.medium
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.extension.ExtensionContext
