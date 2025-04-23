@@ -1,6 +1,5 @@
 package main.kotlin.string.hard
 
-import org.junit.Assert.assertEquals
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.extension.ExtensionContext
 import org.junit.jupiter.params.ParameterizedTest
@@ -66,44 +65,57 @@ abstract class LongestValidParentheses {
 class LongestValidParenthesisImpl: LongestValidParentheses() {
     override fun longestValidParentheses(s: String): Int {
         // Left to right
-        var left = 0
-        var right = 0
+        /**
+        s =      "( ) ( ) )    ( )"
+        ^
+        left =  0 1   2   2 0  1
+        right = 0   1   2 3 0    2
+        max =   0   2   4 4 4  4 4
+         */
+        var open = 0
+        var close = 0
         var max = 0
 
         for (i in s.indices) {
-            if (s[i] == '(') {
-                left++
-            } else {
-                right++
-            }
+            if (s[i] == '(') open++ else close++
 
-            if (left == right) {
-                if (left * 2 > max) {
-                    max = left * 2
+            if (open == close) {
+                if (open * 2 > max) {
+                    max = open * 2
                 }
-            } else if (right > left) {
-                left = 0
-                right = 0
+            } else if (close > open) {
+                open = 0
+                close = 0
             }
         }
 
+        /**
+        s =     "( ( )"
+        ^
+        left =  0 1 2
+        right = 0     1
+        max =   0 0 0 0
+         */
         // Right to left
-        left = 0
-        right = 0
+        /**
+        s =     "( ( )"
+        ^
+        left =  0 2 1
+        right = 0     1
+        max =   2 2 2 0
+         */
+        open = 0
+        close = 0
         for (i in s.indices.reversed()) {
-            if (s[i] == '(') {
-                left++
-            } else {
-                right++
-            }
+            if (s[i] == '(') open++ else close++
 
-            if (left == right) {
-                if (left * 2 > max) {
-                    max = left * 2
+            if (open == close) {
+                if (open * 2 > max) {
+                    max = open * 2
                 }
-            } else if (left > right) {
-                left = 0
-                right = 0
+            } else if (open > close) {
+                open = 0
+                close = 0
             }
         }
 
