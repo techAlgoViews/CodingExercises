@@ -60,44 +60,40 @@ abstract class FindFirstAndLastPositionOfElementInSortedArray {
 class FindFirstAndLastPositionOfElementInSortedArrayImpl: FindFirstAndLastPositionOfElementInSortedArray() {
 
     override fun searchRange(nums: IntArray, target: Int): IntArray {
-        // Binary search for the target
+        val leftmost = binarySearch(nums, target, true)
+        val rightmost = binarySearch(nums, target, false)
+        return intArrayOf(leftmost, rightmost)
+    }
+
+    private fun binarySearch(nums: IntArray, target: Int, findLeftmost: Boolean): Int {
         var left = 0
         var right = nums.size - 1
 
         while (left <= right) {
-            val middlePos = left + (right - left) / 2
-
-            if (nums[middlePos] == target) {
-                // Expand the check to left and right
-                val leftmost = findLeftmost(nums, target, middlePos)
-                val rightmost = findRightmost(nums, target, middlePos)
-                return intArrayOf(leftmost, rightmost)
-
-            } else if (nums[middlePos] > target) {
-                right = middlePos - 1
+            val middle = left + (right - left) / 2
+            if (nums[middle] == target) {
+                if (findLeftmost) {
+                    // While the element on the left exists and it is equals to the target
+                    if (middle > 0 && nums[middle - 1] == target) {
+                        right = middle - 1
+                    } else {
+                        return middle
+                    }
+                } else {
+                    // while the element on the right exists and it is equals to the target
+                    if (middle < nums.size - 1 && nums[middle + 1] == target) {
+                        left = middle + 1
+                    } else {
+                        return middle
+                    }
+                }
+            } else if (nums[middle] < target) {
+                left = middle + 1
             } else {
-                left = middlePos + 1
+                right = middle - 1
             }
         }
 
-        return intArrayOf(-1, -1)
-    }
-
-    private fun findLeftmost(nums: IntArray, target: Int, currentPos: Int): Int {
-        var leftmost = currentPos
-        while ((leftmost - 1 >= 0) && nums[leftmost - 1] == target) {
-            leftmost--
-        }
-
-        return leftmost
-    }
-
-    private fun findRightmost(nums: IntArray, target: Int, currentPos: Int): Int {
-        var rightmost = currentPos
-        while ((rightmost + 1 < nums.size) && nums[rightmost + 1] == target) {
-            rightmost++
-        }
-
-        return rightmost
+        return -1
     }
 }
